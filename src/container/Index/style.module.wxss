@@ -1,0 +1,8 @@
+.index {
+  width: 200px;
+  height: 900px;
+  background: green;
+}
+.index span {
+  color: red;
+}
