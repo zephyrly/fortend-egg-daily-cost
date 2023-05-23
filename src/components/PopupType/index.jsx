@@ -1,7 +1,7 @@
 /*
  * @Date: 2023-05-22 16:08:41
  * @LastEditors: okzfans
- * @LastEditTime: 2023-05-22 17:38:53
+ * @LastEditTime: 2023-05-23 14:37:57
  * @Description: nothing
  * Copyright (c) 2023 by okzfans, All Rights Reserved.
  */
@@ -59,7 +59,7 @@ const PopupType = forwardRef(({ onSelect }, ref) => {
             destroy={false}
             mountContainer={() => document.body}
         >
-            <div className={s.PropType}>
+            <div className={s.popupType}>
                 <div className={s.header}>
                     <Icon
                         type='worng'

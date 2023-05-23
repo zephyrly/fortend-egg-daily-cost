@@ -1,5 +1,5 @@
 import React, { forwardRef, useState } from 'react'
-import PropTypes from 'prop-types'
+import propTypes from 'prop-types'
 import { Popup, DatePicker  } from 'zarm'
 import dayjs from 'dayjs' 
 
@@ -47,8 +47,8 @@ const PopupDate = forwardRef(({ onSelect, mode = 'date' }, ref) => {
 });
 
 PopupDate.propTypes = {
-  mode: PropTypes.string, // 日期模式
-  onSelect: PropTypes.func, // 选择后的回调
+  mode: propTypes.string, // 日期模式
+  onSelect: propTypes.func, // 选择后的回调
 }
 
 export default PopupDate;

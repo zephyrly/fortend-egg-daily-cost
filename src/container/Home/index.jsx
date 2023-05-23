@@ -1,24 +1,28 @@
 /*
  * @Date: 2023-05-18 15:38:47
  * @LastEditors: okzfans
- * @LastEditTime: 2023-05-22 18:59:32
+ * @LastEditTime: 2023-05-23 17:00:55
  * @Description: nothing
  * Copyright (c) 2023 by okzfans, All Rights Reserved.
  */
 
 import React, { useState, useEffect, useRef } from 'react'
 import { Icon, Pull } from 'zarm'
+import CustomIcon from '@/components/CustomIcon'
 import BillItem from '@/components/BillItem'
 import PopupType from '@/components/PopupType'
 import PopupDate from '@/components/PopupDate'
+import PopupAddBill from '../../components/PopupAddBill'
 import dayjs from 'dayjs'
 import { get, REFRESH_STATE, LOAD_STATE } from '@/utils' // Pull 组件需要的一些常量
 
 import s from './style.module.less'
 
+
 const Home = () => {
     const typeRef = useRef() // 账单类型ref
     const monthRef = useRef() // 月份筛选ref
+    const addRef = useRef() // 新增账单的ref
 
     const [currentTime, setCurrentTime] = useState(dayjs().format('YYYY-MM'))
     const [page, setPage] = useState(1)
@@ -26,6 +30,8 @@ const Home = () => {
     const [refreshing, setRefreshing] = useState(REFRESH_STATE.normal)
     const [loading, setLoading] = useState(LOAD_STATE.normal)
     const [currentSelect, setCurrentSelect] = useState({}) // 当前筛选类型
+    const [totalExpense, setTotalExpense] = useState(0) // 当前筛选类型
+    const [totalIncome, setTotalIncome] = useState(0) // 当前筛选类型
 
     const [list, setList] = useState([
         {
@@ -61,6 +67,9 @@ const Home = () => {
         } else {
             setList(list.concat(data.list))
         }
+
+        setTotalExpense(data.totalExpense.toFixed(2))
+        setTotalIncome(data.totalIncome.toFixed(2))
         setTotalPage(data.totalPage)
         // 上滑加载状态
         setLoading(LOAD_STATE.success)
@@ -74,9 +83,14 @@ const Home = () => {
 
     // 添加月份弹框
     const monthToggle = () => {
-        console.log('123')
         monthRef.current && monthRef.current.show()
     }
+
+    // 新增账单的弹框
+    const addToggle = () => {
+        addRef.current && addRef.current.show()
+    }
+
 
     // 筛选类型
     const select = (item) => {
@@ -88,6 +102,7 @@ const Home = () => {
 
     // 筛选月份
     const selectMonth = (item) => {
+        console.log(item)
         setRefreshing()
         // 触发刷新列表，将分页重制为 1
         setPage(1)
@@ -116,10 +131,10 @@ const Home = () => {
             <div className={s.header}>
                 <div className={s.dataWrap}>
                     <span className={s.expense}>
-                        总支出：<b>¥ 200</b>
+                        总支出：<b>¥ {totalExpense}</b>
                     </span>
                     <span className={s.income}>
-                        总收入：<b>¥ 500</b>
+                        总收入：<b>¥ {totalIncome}</b>
                     </span>
                 </div>
                 <div className={s.typeWrap}>
@@ -131,7 +146,7 @@ const Home = () => {
                     </div>
                     <div className={s.right} >
                         <span className={s.time} onClick={monthToggle}>
-                            2022-06
+                            {currentTime || ''}{''}
                             <Icon className={s.arrow}  type='arrow-bottom' />
                         </span>
                     </div>
@@ -158,8 +173,10 @@ const Home = () => {
                     </Pull>
                 ) : null}
             </div>
+            <div className={s.add} onClick={addToggle}><CustomIcon type="tianjia"></CustomIcon></div>
             <PopupType ref={typeRef} onSelect={select}></PopupType>
             <PopupDate ref={monthRef} mode="month" onSelect={selectMonth}></PopupDate>
+            <PopupAddBill ref={addRef} onReload={refreshData} ></PopupAddBill>
         </div>
     )
 }
