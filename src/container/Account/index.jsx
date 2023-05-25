@@ -1,11 +1,3 @@
-/*
- * @Date: 2023-05-18 15:38:47
- * @LastEditors: okzfans
- * @LastEditTime: 2023-05-25 15:57:29
- * @Description: nothing
- * Copyright (c) 2023 by okzfans, All Rights Reserved. 
- */
-
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Cell, Modal, Input, Button, Toast, FilePicker } from 'zarm';
